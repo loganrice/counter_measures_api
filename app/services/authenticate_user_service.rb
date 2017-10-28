@@ -5,11 +5,11 @@ class AuthenticateUserService
   end
 
   def call
-    JsonWebToken.encode(user_id: user.id) if user
-  end
-
-  def success?
-    @success
+    if user
+      OpenStruct.new(success?: true, data: JsonWebToken.encode(user_id: user.id), error: nil)
+    else
+      OpenStruct.new(success?: false, data: nil, error: "Invalid user or password")
+    end
   end
 
   private
@@ -20,7 +20,7 @@ class AuthenticateUserService
     if user && user.authenticate(password)
       user
     else
-      @success = false
+      nil
     end
   end
 end
