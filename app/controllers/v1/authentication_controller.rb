@@ -11,7 +11,9 @@ class V1::AuthenticationController < ApplicationController
   private
 
   def form_params
-    logger.debug "params what??? #{params}"
+    logger.debug "*****params what works??? #{params}"
+    logger.debug "*****params BODY?? #{request.body}"
+    logger.debug "*****params RAW??? #{request.raw_post}"
     params.require(:user).permit(:email, :password)
   end
 end
